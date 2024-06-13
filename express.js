@@ -1,8 +1,62 @@
 const express = require('express');
+
+const controller  =  require('./controller/user')
 const app = express();
 
 
 app.use(express.json())
+
+// mvc  
+app
+.get('/',controller.home)
+.get('/search', controller.search)
+.get('/admin',controller.admin )
+.get('/about',controller.about)
+.get('/momo',controller.momo)
+.post('/service',controller.service)
+
+
+
+
+app.get('*',(req,res)=>{
+        
+    res.send("bhai ye page exist nahi karta h")
+})
+
+app.listen(5000,()=>console.log("server is strted"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //middleware
 
@@ -42,42 +96,27 @@ app.use(express.json())
 
 // admin middleware
 
-      const admin = ((req,res,next)=>{
+    //   const admin = ((req,res,next)=>{
 
-          if(req.path==='/admin' && req.method==='GET'){
-            console.log("access by admin")
-            // res.send("access by admin")
-          }
-          else{
-            res.send("only admin can access")
-          }
-          next()
-    })
+    //       if(req.path==='/admin' && req.method==='GET'){
+    //         console.log("access by admin")
+    //         // res.send("access by admin")
+    //       }
+    //       else{
+    //         res.send("only admin can access")
+    //       }
+    //       next()
+    // })
 
 
 
-app.get('/',(req,res)=>{
-            
-        res.send("hello from backend side")
-})
 
-app.get('/search',(req,res)=>{
-    res.send("hello from search side")
-})
 
-app.get('/admin',admin, (req,res)=>{
-    res.send("Admin page")
-})
-
-app.get('/about',(req,res)=>{
-
-       res.send("hello from home side")
-})
-let data = [
-    {id:1,name:"sohan"},
-    {id:2,name:"mohan"},
-    {id:3,name:"rohan"},
-   ]
+// let data = [
+//     {id:1,name:"sohan"},
+//     {id:2,name:"mohan"},
+//     {id:3,name:"rohan"},
+//    ]
 // app.get('/api/users/:id',(req,res)=>{
 //         console.log(req.params)
 //                const value   = parseInt(req.params.id)
@@ -91,26 +130,26 @@ let data = [
 // })
 
 
-app.get('/api/users',(req,res)=>{
-    console.log(req.query)
-    res.send(data)
+// app.get('/api/users',(req,res)=>{
+//     console.log(req.query)
+//     res.send(data)
              
-})
- let value = []
+// })
+//  let value = []
 
-app.post('/api/users',(req,res)=>{
-    //   console.log(req.body)
-      const a = req.body;
-      value.push(a)
-      console.log(value)
-    res.send("your photo is uploaded successfully")
-})
+// app.post('/api/users',(req,res)=>{
+//     //   console.log(req.body)
+//       const a = req.body;
+//       value.push(a)
+//       console.log(value)
+//     res.send("your photo is uploaded successfully")
+// })
 
-app.delete('/api/users/:id',(req,res)=>{
-    console.log(req.params)
+// app.delete('/api/users/:id',(req,res)=>{
+//     console.log(req.params)
 
-    res.status(200).send("your photo is deleted")
-})
+//     res.status(200).send("your photo is deleted")
+// })
 
 // route params
 // app.get('/instagram/:id',(req,res)=>{
@@ -124,10 +163,5 @@ app.delete('/api/users/:id',(req,res)=>{
 
 
 
-app.get('*',(req,res)=>{
-        
-    res.send("bhai ye page exist nahi karta h")
-})
 
-app.listen(5000,()=>console.log("server is strted"))
 
