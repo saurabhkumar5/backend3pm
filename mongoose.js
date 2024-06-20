@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -9,14 +10,16 @@ main().catch(err => console.log(err));
 
 async function main() {
 //   await mongoose.connect('mongodb://127.0.0.1:27017/batch3pm')
-   await mongoose.connect('mongodb+srv://saurabhmaurya8626:xHOHaT3llc17ixiW@cluster0.dfo8bmr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+   await mongoose.connect(process.env.MONGO_URL)
   .then(()=>console.log("database is connected"))
 }
 
 
  const schema = new mongoose.Schema({
       name:String,
-      mob:Number
+      mob:Number,
+      address:String,
+      hobbey:String,
  })
 
 const Model = mongoose.model('product',schema);
@@ -30,6 +33,24 @@ app.get('/',(req,res)=>{
  
     res.send("hello from backend")
 })
+
+app.get('/data',(req,res)=>{
+
+
+    // Model.find()
+    // Model.findById('66740039e3234dd6780c3e47')
+    Model.findByIdAndDelete('66740039e3234dd6780c3e47')
+    // .then((value)=>console.log(value))
+    .then((value)=>{
+
+        return res.send(value)
+    })
+    
+    
+    // res.send("hello from data")
+})
+
+
 
 
 
@@ -45,10 +66,18 @@ app.post('/data',(req,res)=>{
 
 app.post('/user',(req,res)=>{
 
-    const data = new Users({name:"aman",mob:789})
-    data.save();
+    // const data = new Users({name:"aman",mob:789})
+    // data.save();
     
     res.send("hello from backend")
+})
+
+
+
+app.delete('/delete',(req,res)=>{
+      
+       Model.findByIdAndDelete('6672b89c40c64569e97b13dd')
+       .then(()=>res.send("delete successfully"))
 })
 
 
